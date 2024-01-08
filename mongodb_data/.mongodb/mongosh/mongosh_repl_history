@@ -1,0 +1,9 @@
+db.employees.remove({})
+show collections
+use enterprise
+show dbs
+show db
+db.collectionsInfo()
+db.collectionInfos()
+db.user.find()
+db.user.insertOne({"name" : "lucas", "ro
