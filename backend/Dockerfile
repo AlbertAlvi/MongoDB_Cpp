@@ -7,7 +7,7 @@ RUN microdnf install -y ncurses
 
 WORKDIR /usr/src/app
 
-COPY ping.cpp .
+# COPY . .
 
 EXPOSE 8080
 

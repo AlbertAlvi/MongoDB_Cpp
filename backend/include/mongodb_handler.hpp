@@ -32,7 +32,7 @@ namespace mongo_handler
     {
     private:
         mongocxx::uri uri;
-        mongocxx::client client; // conn
+        mongocxx::client client; // connection
         mongocxx::database db;
 
     public:
@@ -47,26 +47,97 @@ namespace mongo_handler
         // {
         // }
 
-        void insertEmployee(const std::string &name, const int &age, const std::string& role, const std::string& department)
+        bool insertEmployee(const std::string &name, const int &age, const std::string &role, const std::string &department)
         {
-            mongocxx::collection collection{db[collectionName]};
-            auto builder = bsoncxx::builder::stream::document{};
+            try
+            {
+                mongocxx::collection collection{db[collectionName]};
+                // bsoncxx::types::b_oid bson_id{bsoncxx::oid{_id}};
 
-            bsoncxx::v_noabi::document::value new_doc =
-                builder << "name" << name
-                        << "age" << age
-                        << "role" << role
-                        << "department" << department
-                        << bsoncxx::builder::stream::finalize;
+                auto builder = bsoncxx::builder::stream::document{};
+                bsoncxx::document::value new_doc =
+                    builder //<< "_id" << bson_id
+                    << "name" << name
+                    << "age" << age
+                    << "role" << role
+                    << "department" << department
+                    << bsoncxx::builder::stream::finalize;
 
-            collection.insert_one(new_doc.view());
+                bsoncxx::stdx::optional<mongocxx::result::insert_one> result =
+                    collection.insert_one(new_doc.view());
+                if (result)
+                    return result->inserted_id().get_oid().value.to_string().size() != 0;
+            }
+            catch (const std::exception &e)
+            {
+                std::cerr << "Error inserting employee: " << e.what() << std::endl;
+            }
+
+            // happens for both !if and catch
+            return false;
         }
 
-        void showEmployees() {
+        bool updateDepartment(const std::string &_id, const std::string &new_department)
+        {
+            try
+            {
+                mongocxx::collection collection{db[collectionName]};
+
+                auto filter = bsoncxx::builder::stream::document{}
+                              << "_id" << bsoncxx::oid{_id}
+                              << bsoncxx::builder::stream::finalize;
+
+                auto dep_update = bsoncxx::builder::stream::document{}
+                                  << "$set" << bsoncxx::builder::stream::open_document
+                                  << "department" << new_department
+                                  << bsoncxx::builder::stream::close_document
+                                  << bsoncxx::builder::stream::finalize;
+
+                bsoncxx::stdx::optional<mongocxx::result::update> result =
+                    collection.update_one(filter.view(), dep_update.view());
+
+                return result->modified_count();
+            }
+            catch (const std::exception &e)
+            {
+                std::cerr << "Error removing employee: " << e.what() << std::endl;
+            }
+
+            return false;
+        }
+
+        bool removeEmployee(const std::string &_id)
+        {
+            try
+            {
+                mongocxx::collection collection{db[collectionName]};
+
+                auto builder = bsoncxx::builder::stream::document{};
+                bsoncxx::document::value filter =
+                    builder
+                    << "_id" << bsoncxx::oid{_id}
+                    << bsoncxx::builder::stream::finalize;
+
+                bsoncxx::stdx::optional<mongocxx::result::delete_result> result =
+                    collection.delete_one(filter.view());
+
+                return result->deleted_count();
+            }
+            catch (const std::exception &e)
+            {
+                std::cerr << "Error removing employee: " << e.what() << std::endl;
+            }
+
+            return false;
+        }
+
+        void showEmployees()
+        {
             mongocxx::collection collection{db[collectionName]};
             mongocxx::cursor cursor = collection.find({});
 
-            for (auto &&document : cursor) {
+            for (auto &&document : cursor)
+            {
                 std::string json = bsoncxx::to_json(document);
                 std::cout << json << "\n";
             }

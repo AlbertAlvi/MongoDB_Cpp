@@ -16,26 +16,33 @@ int main()
     std::cout << "env: " << mongo_handler::lookup_env("MONGO_CONNECTION_STRING") << "\n"
               << "uriName: " << mongo_handler::uriName << "\n";
 
-    while(true) {
-      std::string nome, role, departamento;
-      int idade;
+    while (true)
+    {
+      // std::string nome, role, departamento;
+      // int idade;
 
-      std::cout << "Insira um nome:" << "\n";
-      std::cin >> nome;
-      std::cout << "Insira uma idade:" << "\n";
-      std::cin >> idade;
-      std::cout << "Insira um cargo:" << "\n";
-      std::cin >> role;
-      std::cout << "Insira um departamento:" << "\n";
-      std::cin >> departamento;
+      // std::cout << "Insira um nome:" << "\n";
+      // std::cin >> nome;
+      // std::cout << "Insira uma idade:" << "\n";
+      // std::cin >> idade;
+      // std::cout << "Insira um cargo:" << "\n";
+      // std::cin >> role;
+      // std::cout << "Insira um departamento:" << "\n";
+      // std::cin >> departamento;
 
-      handler.insertEmployee(nome, idade, role, departamento);
+      // handler.insertEmployee(nome, idade, role, departamento);
 
-      char op;
-      std::cout << "Continuar? y / n" << "\n";
-      std::cin >> op;
+      // char op;
+      // std::cout << "Continuar? y / n" << "\n";
+      // std::cin >> op;
 
-      if(op == 'n') break;
+      // if(op == 'n') break;
+
+      std::string _id;
+      std::cout << "insira um id(24b): ";
+      std::getline(std::cin, _id);
+      handler.removeEmployee(_id);
+      break;
     }
 
     handler.showEmployees();
