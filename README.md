@@ -22,4 +22,4 @@ Copy and paste this address on your browser:
 http://localhost:8080/
 ```
 
-After that, try to insert and delete employees from de database
+After that, try to insert and delete employees from the database
