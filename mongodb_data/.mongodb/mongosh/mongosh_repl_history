@@ -1,4 +1,6 @@
 db.employees.find({})
+use enterprise
+db.employees.find({})
 db.employees.insertOne({"name":"JOAOOOO", "age":40000})
 db.employees.insertOne({"name":"Grogoroth", "age":40000})
 db.employees.find({})

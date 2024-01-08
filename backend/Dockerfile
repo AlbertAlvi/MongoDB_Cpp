@@ -4,19 +4,21 @@ RUN microdnf upgrade -y
 RUN microdnf install -y g++
 RUN microdnf install -y nano
 RUN microdnf install -y ncurses
+RUN microdnf install -y net-tools
 
 WORKDIR /usr/src/app
 
-# COPY . .
+COPY . .
 
 EXPOSE 8080
 
-# RUN g++ \
-#     -o ping \
-#     ping.cpp \
-#     -I/usr/local/include/bsoncxx/v_noabi/ \
-#     -I/usr/local/include/mongocxx/v_noabi/ \
-#     -lmongocxx \
-#     -lbsoncxx
+RUN g++ \
+    -o main \
+    main.cpp \
+    -I/usr/local/include/bsoncxx/v_noabi/ \
+    -I/usr/local/include/mongocxx/v_noabi/ \
+    -I./include \
+    -lmongocxx \
+    -lbsoncxx
 
-# CMD /pings
+CMD ["./main"]
