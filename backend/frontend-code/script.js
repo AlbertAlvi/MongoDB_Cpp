@@ -1,5 +1,10 @@
 "use strict";
 
+const form_div = document.querySelector("#employee-form");
+const submit_btn = form_div.querySelector("#submit-btn");
+
+submit_btn.addEventListener("click", submitForm);
+
 function submitForm() {
 	let name = document.getElementById("name").value;
 	let age = document.getElementById("age").value;
@@ -13,8 +18,6 @@ function submitForm() {
 		department: department,
 	};
 
-	// console.log('Form Data:', formData);
-
 	fetch("http://localhost:8080/submit", {
 		method: "POST",
 		headers: {
@@ -24,19 +27,29 @@ function submitForm() {
 	})
 		.then((response) => {
 			console.log("Response:", response);
+			// Limpar os campos do formulário
+            form_div.name.value = "";
+            form_div.age.value = "";
+            form_div.role.value = "";
+            form_div.department.value = "";
 		})
 		.catch((error) => {
 			console.error("Error:", error);
 		});
 }
 
-const form_div = document.querySelector("#userForm");
-const data_div = document.querySelector("#data");
+const data_div = document.querySelector("#employee-data");
 
 const data_btn = document.querySelector("#data-btn");
 const form_btn = document.querySelector("#form-btn");
 
-data_btn.addEventListener("click", () => {
+data_btn.addEventListener("click", fetchData);
+form_btn.addEventListener("click", () => {
+	data_div.style.display = "none";
+	form_div.style.display = "block";
+});
+
+function fetchData() {
 	fetch("http://localhost:8080/data", {
 		method: "GET",
 	})
@@ -51,11 +64,7 @@ data_btn.addEventListener("click", () => {
 
 	form_div.style.display = "none";
 	data_div.style.display = "flex";
-});
-form_btn.addEventListener("click", () => {
-	data_div.style.display = "none";
-	form_div.style.display = "block";
-});
+}
 
 function displayData(arr_json) {
 	data_div.innerHTML = "";
@@ -69,12 +78,26 @@ function displayData(arr_json) {
 		</div>
 		`;
 		data_div.appendChild(item);
-		
+
 		// storing _id for deleting
 		const span = item.querySelector("span");
 		span.setAttribute("data-id", `${obj["_id"]["$oid"]}`);
-		span.addEventListener("click", (evt)=>{
-			console.log(evt.target);
+		span.addEventListener("click", (evt) => {
+			const _id = evt.target.getAttribute("data-id");
+			fetch("http://localhost:8080/remove", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ _id }),
+			})
+				.then((response) => {
+					console.log("remove:", response);
+					fetchData();
+				})
+				.catch((error) => {
+					console.error(error);
+				});
 		});
 	}
 }

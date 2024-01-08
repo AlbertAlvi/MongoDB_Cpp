@@ -82,7 +82,7 @@ li span:hover {
     background-color: #111;
 }
 
-#data .item {
+#employee-data .item {
     display: flex;
     border-radius: 5px;
     background-color: purple;
@@ -92,7 +92,7 @@ li span:hover {
     align-items: center;
 }
 
-#data {
+#employee-data {
     display: none;
     padding: 10px;
     border-radius: 8px;

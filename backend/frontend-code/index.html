@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="styles.css">
-    <title>User Form</title>
+    <title>Employee Form</title>
 </head>
 
 <body>
@@ -16,7 +16,7 @@
             <li><span id="data-btn">Data</span></li>
         </ul>
         <div class="internal-container">
-            <form id="userForm">
+            <form id="employee-form">
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" required>
                 <label for="age">Age:</label>
@@ -25,10 +25,10 @@
                 <input type="text" id="role" name="role" required>
                 <label for="department">Department:</label>
                 <input type="text" id="department" name="department" required>
-                <button type="button" onclick="submitForm()">Submit</button>
+                <button type="button" id="submit-btn">Submit</button>
             </form>
 
-            <div id="data">
+            <div id="employee-data">
                 
             </div>
         </div>

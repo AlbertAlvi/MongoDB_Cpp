@@ -55,7 +55,7 @@ int main()
         res.set_content(js, "application/javascript"); });
 
     // Define a route to handle form submissions
-    server.Post("/submit", [&](const httplib::Request &req, httplib::Response &res)
+    server.Post("/submit", [&mongoHandler](const httplib::Request &req, httplib::Response &res)
                 {
         res.set_header("Access-Control-Allow-Origin", "*");
         res.set_header("Access-Control-Allow-Methods", "POST");
@@ -67,15 +67,31 @@ int main()
         std::string role = json["role"];
         std::string department = json["department"];
         
-        std::cout << name << "\n";
-        std::cout << age << "\n";
-        std::cout << role << "\n";
-        std::cout << department << "\n";
+        // std::cout << name << "\n";
+        // std::cout << age << "\n";
+        // std::cout << role << "\n";
+        // std::cout << department << "\n";
 
         // Insert data into MongoDB
         bool success = mongoHandler.insertEmployee(name, age, role, department);
 
         // Send response
+        if (success) {
+            res.set_content("Form submitted successfully", "text/plain");
+        } else {
+            res.set_content("Error submitting form", "text/plain");
+        } });
+
+    server.Post("/remove", [&mongoHandler](const httplib::Request &req, httplib::Response &res)
+                {
+        res.set_header("Access-Control-Allow-Origin", "*");
+        res.set_header("Access-Control-Allow-Methods", "POST");
+
+        auto json = nlohmann::json::parse(req.body);
+        std::string _id = json["_id"];
+       
+        bool success = mongoHandler.removeEmployee(_id);
+
         if (success) {
             res.set_content("Form submitted successfully", "text/plain");
         } else {
