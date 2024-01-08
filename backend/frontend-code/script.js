@@ -63,7 +63,10 @@ function displayData(arr_json) {
 		const item = document.createElement("div");
 		item.classList.add("item");
 		item.innerHTML = `
-		<span class="material-symbols-outlined">delete</span>${JSON.stringify(obj)}
+		<span class="material-symbols-outlined">delete</span>
+		<div>
+			Name: ${obj["name"]} | Age: ${obj["age"]} | Role: ${obj["role"]} | Department: ${obj["department"]}
+		</div>
 		`;
 		data_div.appendChild(item);
 		

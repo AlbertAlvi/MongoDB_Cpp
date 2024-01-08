@@ -1,5 +1,3 @@
-# MongoDB_Cpp
-
 # Objetivo
 Implementação de um sistema utilizando banco de dados orientado a documentos para apresentação durante o seminário da disciplina de Banco de Dados II.
 
