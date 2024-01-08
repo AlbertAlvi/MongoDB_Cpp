@@ -12,13 +12,13 @@ COPY . .
 
 EXPOSE 8080
 
-RUN g++ \
-    -o main \
-    main.cpp \
-    -I/usr/local/include/bsoncxx/v_noabi/ \
-    -I/usr/local/include/mongocxx/v_noabi/ \
-    -I./include \
-    -lmongocxx \
-    -lbsoncxx
+# RUN g++ \
+#     -o main \
+#     main.cpp \
+#     -I/usr/local/include/bsoncxx/v_noabi/ \
+#     -I/usr/local/include/mongocxx/v_noabi/ \
+#     -I./include \
+#     -lmongocxx \
+#     -lbsoncxx
 
-CMD ["./main"]
+# CMD ["./main"]

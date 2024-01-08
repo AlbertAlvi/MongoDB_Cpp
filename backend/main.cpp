@@ -30,13 +30,17 @@ int main()
     // Create HTTP server
     httplib::Server server;
 
-    // unecessary
     // Enable CORS for all routes
-    // server.set_mount_point("/", "./");
+    server.set_mount_point("/", "./");
 
     // Serve HTML, CSS, and JS files on the root endpoint
     server.Get("/", handleDefaultRoute);
     server.Get("/index.html", handleDefaultRoute);
+
+    server.Get("/data", [&mongoHandler](const httplib::Request &req, httplib::Response &res)
+               {
+        auto fields = mongoHandler.retrieveAllFields();
+        res.set_content(fields.dump(), "application/json"); });
 
     server.Get("/styles.css", [](const httplib::Request &req, httplib::Response &res)
                {
@@ -53,7 +57,8 @@ int main()
     // Define a route to handle form submissions
     server.Post("/submit", [&](const httplib::Request &req, httplib::Response &res)
                 {
-        // res.set_header("Access-Control-Allow-Origin", "*");
+        res.set_header("Access-Control-Allow-Origin", "*");
+        res.set_header("Access-Control-Allow-Methods", "POST");
 
         // Extract data from the request
         auto json = nlohmann::json::parse(req.body);
@@ -78,7 +83,8 @@ int main()
         } });
 
     // Start the server on port 8080
-    std::cout << "Listening on port 8080..." << "\n";
+    std::cout << "Listening on port 8080..."
+              << "\n";
     server.listen("0.0.0.0", 8080);
   }
   catch (const std::exception &e)

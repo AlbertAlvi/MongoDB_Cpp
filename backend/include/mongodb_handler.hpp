@@ -4,12 +4,14 @@
 #include <string>
 #include <iostream>
 
-#include "bsoncxx/builder/stream/document.hpp"
-#include "bsoncxx/json.hpp"
-#include "bsoncxx/oid.hpp"
-#include "mongocxx/client.hpp"
-#include "mongocxx/database.hpp"
-#include "mongocxx/uri.hpp"
+#include <bsoncxx/builder/stream/document.hpp>
+#include <bsoncxx/json.hpp>
+#include <bsoncxx/oid.hpp>
+#include <mongocxx/client.hpp>
+#include <mongocxx/database.hpp>
+#include <mongocxx/uri.hpp>
+
+#include <nlohmann/json.hpp>
 
 namespace mongo_handler
 {
@@ -141,6 +143,32 @@ namespace mongo_handler
                 std::string json = bsoncxx::to_json(document);
                 std::cout << json << "\n";
             }
+        }
+
+        nlohmann::json retrieveAllFields()
+        {
+            try
+            {
+                mongocxx::collection collection{db[collectionName]};
+                mongocxx::cursor cursor = collection.find({});
+
+                nlohmann::json fieldsArray = nlohmann::json::array();
+
+                for (auto &&document : cursor)
+                {
+                    std::string json = bsoncxx::to_json(document);
+                    nlohmann::json documentJson = nlohmann::json::parse(json);
+                    fieldsArray.push_back(documentJson);
+                }
+
+                return fieldsArray;
+            }
+            catch (const std::exception &e)
+            {
+                std::cerr << "Error retrieving all fields: " << e.what() << std::endl;
+            }
+
+            return nlohmann::json::array();
         }
     };
 }
