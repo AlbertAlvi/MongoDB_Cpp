@@ -14,7 +14,7 @@ git clone https://github.com/AlbertAlvi/MongoDB_Cpp.git
 ```
 
 ## Running the app
-Run this docker command in the folder where the docker-compose file is located
+Run this docker command in the folder where the docker-compose file is located:
 ```bash
 docker-compose up --build
 ```
