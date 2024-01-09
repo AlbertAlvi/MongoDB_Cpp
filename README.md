@@ -13,11 +13,13 @@ git clone https://github.com/AlbertAlvi/MongoDB_Cpp.git
  cd MongoDB_Cpp
 ```
 
+## Running the app
+Run this docker command in the folder where the docker-compose file is located
 ```bash
 docker-compose up --build
 ```
-## Running the app
-Copy and paste this address on your browser:
+
+Copy and paste this address into your browser:
 ```bash
 http://localhost:8080/
 ```
