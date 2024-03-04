@@ -6,7 +6,7 @@ Simple app used to store employee data using MongoDB.
 
 ## Install
 ```bash
-git clone https://github.com/AlbertAlvi/MongoDB_Cpp.git
+git clone https://github.com/AlbertAlvin8080/MongoDB_Cpp.git
 ```
 
 ```bash
