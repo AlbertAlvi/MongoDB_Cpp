@@ -4,6 +4,11 @@ Implementation of a system using a document-oriented database for presentation d
 ## Description
 Simple app used to store employee data using MongoDB.
 
+## Thrid part dependencies
+This app uses httplib from @yhirose and nlohmann json from @nlohmann:
+- https://github.com/yhirose/cpp-httplib
+- https://github.com/nlohmann/json
+
 ## Install
 ```bash
 git clone https://github.com/AlbertAlvin8080/MongoDB_Cpp.git
