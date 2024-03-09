@@ -15,7 +15,7 @@ git clone https://github.com/AlbertAlvin8080/MongoDB_Cpp.git
 ```
 
 ```bash
- cd MongoDB_Cpp
+cd MongoDB_Cpp
 ```
 
 ## Running the app
