@@ -25,3 +25,5 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=123
+
+# docker-compose exec -it mongodb mongosh --username admin --password 123
