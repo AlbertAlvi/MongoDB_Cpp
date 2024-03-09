@@ -1,2 +1,4 @@
 mongodb_data/
 
+backend/include/httplib.hpp
+backend/include/nlohmann/json.h
