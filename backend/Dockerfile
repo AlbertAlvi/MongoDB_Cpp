@@ -1,12 +1,14 @@
 FROM mongodb/mongo-cxx-driver:3.9.0-redhat-ubi-9.3
 
-RUN microdnf upgrade -y
-RUN microdnf install -y g++
+# it’s important to note that each RUN command in a Dockerfile creates a new layer in the Docker image. If you install packages and create cache files in one layer, and then delete those cache files in a later layer, the overall size of the image will still include the cache, because it’s stored in the earlier layer.
+
+RUN microdnf upgrade -y && microdnf clean all
+RUN microdnf install -y g++ && microdnf clean all
 # RUN microdnf install -y curl # conflicts with curl-minimal installed
-RUN microdnf install -y wget
-RUN microdnf install -y nano
-RUN microdnf install -y ncurses
-RUN microdnf install -y net-tools
+RUN microdnf install -y wget && microdnf clean all
+# RUN microdnf install -y nano && microdnf clean all
+# RUN microdnf install -y ncurses && microdnf clean all
+# RUN microdnf install -y net-tools && microdnf clean all
 
 WORKDIR /usr/src/app
 

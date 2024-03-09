@@ -2,8 +2,11 @@ version: '3.8'
 
 services:
   backend:
-    build: ./backend
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
     container_name: backend
+    image: cppmongo:1.0.1
     ports:
       - '8080:8080'
     volumes:
@@ -16,7 +19,7 @@ services:
     stdin_open: true
 
   mongodb:
-    image: mongo
+    image: mongo:5.0.25
     container_name: mongodb
     ports:
       - '27017:27017'
