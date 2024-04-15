@@ -1,5 +1,5 @@
 # Objective
-Implementation of a system using a document-oriented database for presentation during the Database II course seminar.
+Implementation of a web app using a document-oriented database for presentation during the Database II course seminar.
 
 ## Description
 Simple app used to store employee data using MongoDB.
