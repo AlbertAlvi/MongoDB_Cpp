@@ -4,7 +4,7 @@ Implementation of a web app using a document-oriented database for presentation 
 ## Description
 Web App designed to store employee data using MongoDB.
 
-## Thrid part dependencies
+## Third part dependencies
 This app uses [_httplib_](https://github.com/yhirose/cpp-httplib) from [@yhirose](https://github.com/yhirose) and [_nlohmann json_](https://github.com/nlohmann/json) from [@nlohmann](https://github.com/nlohmann).
 
 ## Install

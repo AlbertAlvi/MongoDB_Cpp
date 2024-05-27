@@ -1,12 +1,15 @@
 #!/bin/bash
 
-git add .
-echo ""
+read -p "Enter a commit message: " commit_message
+# echo
 
-git commit -m shell-driven-update
-echo ""
+git add .
+echo
+
+git commit -m "$commit_message"
+echo
 
 git push
-echo ""
+echo
 
 read -p "Press any key to close..."
